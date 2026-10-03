@@ -1,22 +1,20 @@
-name: Android CI - Build Debug APK & Package
+name: Build & Upload Debug APK
 
 on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
-  build:
-    name: Build Debug APK & Create ZIP Package
+  build-debug-apk:
+    name: Build Debug APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -26,25 +24,29 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Setup Android SDK & NDK
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant Execute Permissions for Gradle
-        run: chmod +x gradlew || true
+      - name: Install Android NDK & CMake
+        run: |
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "ndk;27.0.12077973" "cmake;3.22.1"
 
-      - name: Build Debug APK & Distribution Package
-        run: ./gradlew :app:createDebugZip --no-daemon
+      - name: Create .env File
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SchwungLive-Debug-APK
+          name: app-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 14
-
-      - name: Upload Distribution ZIP Package Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SchwungLive-Debug-Distribution-ZIP
-          path: app/build/distributions/SchwungLive-Debug-Build.zip
           retention-days: 14
