@@ -1,0 +1,6 @@
+{
+  "name": "SchwungLive",
+  "description": "SchwungLive v1.7 Groovebox Workstation with 16-PadGrid, Splice MCP Sound Cloud, Sequencer & Audio Engine",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

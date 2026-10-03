@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Pioneer DJ / AlphaTheta USB Vendor ID 0x08E4 (2276) -->
+    <usb-device vendor-id="2276" />
+    <!-- Standard USB Audio Class (1) -->
+    <usb-device class="1" />
+</resources>
