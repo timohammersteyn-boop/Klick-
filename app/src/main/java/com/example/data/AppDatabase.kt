@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ProjectEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ProjectEntity::class, SpliceSampleEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun projectDao(): ProjectDao
+    abstract fun spliceSampleDao(): SpliceSampleDao
 
     companion object {
         @Volatile
