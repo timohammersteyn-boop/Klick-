@@ -38,9 +38,9 @@ android {
     create("release") {
       val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
       storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD")
+      storePassword = System.getenv("STORE_PASSWORD") ?: "schwungpass123"
       keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD")
+      keyPassword = System.getenv("KEY_PASSWORD") ?: "schwungpass123"
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")
@@ -90,6 +90,16 @@ secrets {
 }
 
 googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
+
+// Custom task to package debug build outputs into a ZIP archive
+tasks.register<Zip>("createDebugZip") {
+  group = "build"
+  description = "Packages the debug APK and build outputs into a ZIP archive."
+  dependsOn("assembleDebug")
+  from(layout.buildDirectory.dir("outputs/apk/debug"))
+  archiveFileName.set("SchwungLive-Debug-Build.zip")
+  destinationDirectory.set(layout.buildDirectory.dir("distributions"))
+}
 
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.

@@ -167,8 +167,46 @@ fun WavExportModal(
                 // EXPORT OPTIONS LIST
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier.heightIn(max = 260.dp)
+                    modifier = Modifier.heightIn(max = 280.dp)
                 ) {
+                    // 0. APK & ZIP EXPORT GUIDE
+                    item {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(1.dp, NeonLime, RoundedCornerShape(8.dp)),
+                            colors = CardDefaults.cardColors(containerColor = ChassisBlack),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(10.dp)) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(3.dp))
+                                            .background(NeonLime)
+                                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                                    ) {
+                                        Text("APK & ZIP INFO", fontSize = 7.sp, fontWeight = FontWeight.Black, color = Color.Black)
+                                    }
+                                    Text("APK & PROJECT ZIP HERUNTERLADEN", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                                }
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "1. WICHTIG: Blicke ganz oben rechts in die Kopfzeile deines Browsers (Google AI Studio).\n" +
+                                            "2. Klicke dort auf das Drei-Punkte-Symbol (⋮) oder Einstellungen (⚙️).\n" +
+                                            "3. Wähle 'Export APK' (für die Android-App) oder 'Download ZIP' (für den Quellcode).",
+                                    fontSize = 8.sp,
+                                    color = NeonLime,
+                                    fontFamily = FontFamily.Monospace,
+                                    lineHeight = 11.sp
+                                )
+                            }
+                        }
+                    }
+
                     // 1. FULL MASTER MIX WAV
                     item {
                         ExportOptionRow(
